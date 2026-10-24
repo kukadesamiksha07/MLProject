@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JobShield AI — AI-Powered Job Scam Detection System</title>
+  
+  <!-- Meta Descriptions for Project Presentation -->
+  <meta name="description" content="AI-Powered Job Scam Detection System built with TF-IDF and Logistic Regression. Detect suspicious job postings, analyze recruitment warning signs, and make safer career decisions.">
+  <meta name="theme-color" content="#101C27">
+
+  <!-- Google Fonts: Space Grotesk, DM Sans, JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+
+  <!-- Background Decorative Cyber Elements -->
+  <div class="cyber-background-grid" aria-hidden="true"></div>
+
+  <!-- ==============================================================================
+       1. Navigation Bar
+       ============================================================================== -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="#home" class="nav-brand" aria-label="JobShield AI Home">
+        <div class="brand-icon">
+          <i data-lucide="shield-check"></i>
+        </div>
+        <div class="brand-name">
+          JobShield<span>AI</span>
+        </div>
+        <span class="brand-badge">ML DEFENSE</span>
+      </a>
+
+      <!-- Desktop & Mobile Navigation Links -->
+      <nav>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#home" class="nav-link active">Home</a></li>
+          <li><a href="#analyzer" class="nav-link">Analyze Job</a></li>
+          <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+          <li><a href="#stats" class="nav-link">Real Stats</a></li>
+          <li><a href="#about-model" class="nav-link">About the Model</a></li>
+          <li><a href="#safety" class="nav-link">Safety Guide</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#analyzer" class="btn btn-cta-nav" aria-label="Scan a job">
+          <i data-lucide="scan" style="width: 16px; height: 16px;"></i> Scan a Job
+        </a>
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation menu" aria-controls="nav-links" aria-expanded="false">
+          <i data-lucide="menu"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- ==============================================================================
+         2. Landing Page Hero Section
+         ============================================================================== -->
+    <section class="hero-section" id="home">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="hero-badge-pill">
+              <span class="pulse-dot"></span>
+              AI CYBERSECURITY RECRUITMENT DEFENSE
+            </div>
+            
+            <h1 class="hero-title">
+              Your Next Job Should Be an <span class="text-gradient">Opportunity</span>, Not a Risk.
+            </h1>
+            
+            <p class="hero-subtitle">
+              Detect suspicious job postings with machine learning. Analyze job descriptions, identify warning signs, and make safer career decisions before sharing sensitive personal information.
+            </p>
+
+            <div class="hero-cta-group">
+              <a href="#analyzer" class="btn btn-primary">
+                <i data-lucide="scan-search"></i> Analyze a Job
+              </a>
+              <a href="#how-it-works" class="btn btn-secondary">
+                <i data-lucide="cpu"></i> Explore Features
+              </a>
+            </div>
+
+            <!-- Trust-Focused Security Badges Bar -->
+            <div class="trust-badges-bar">
+              <div class="trust-item">
+                <i data-lucide="database"></i>
+                <span>Trained on 17,880+ Postings</span>
+              </div>
+              <div class="trust-item">
+                <i data-lucide="binary"></i>
+                <span>TF-IDF N-Gram Vectorization</span>
+              </div>
+              <div class="trust-item">
+                <i data-lucide="check-circle-2"></i>
+                <span>98.18% Benchmark Accuracy</span>
+              </div>
+              <div class="trust-item">
+                <i data-lucide="lock"></i>
+                <span>Privacy-First / No Data Sold</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hero Cybersecurity Visual Graphic -->
+          <div class="hero-visual-card">
+            <div class="shield-graphic-container">
+              <div class="radar-ring ring-outer"></div>
+              <div class="radar-ring ring-mid"></div>
+              <div class="radar-ring ring-inner"></div>
+
+              <div class="shield-core">
+                <i data-lucide="shield-alert"></i>
+                <span class="shield-core-label">AI SHIELD</span>
+              </div>
+
+              <!-- Holographic Node Chips -->
+              <div class="floating-chip chip-1">
+                <i data-lucide="activity" style="color: var(--accent); width: 16px; height: 16px;"></i>
+                <span>NLP Engine: <strong>Active</strong></span>
+              </div>
+
+              <div class="floating-chip chip-2">
+                <i data-lucide="fingerprint" style="color: var(--gold); width: 16px; height: 16px;"></i>
+                <span>Scam Vector: <strong>Calibrated</strong></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         3. Job Scam Detection Dashboard (Analyzer Console)
+         ============================================================================== -->
+    <section class="analyzer-section" id="analyzer">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="section-tag">
+            <i data-lucide="terminal" style="width: 16px; height: 16px;"></i>
+            Inference Console
+          </div>
+          <h2 class="section-title">Job Scam Detection Dashboard</h2>
+          <p class="section-desc">
+            Paste any employment posting below. The Scikit-Learn TF-IDF vectorizer and Logistic Regression classifier will inspect vocabulary patterns, language flags, and statistical risk markers.
+          </p>
+        </div>
+
+        <div class="glass-card analyzer-console">
+          
+          <!-- Console Top Controls & Presets -->
+          <div class="console-header-bar">
+            <div class="console-title-group">
+              <i data-lucide="radar" style="color: var(--accent);"></i>
+              <span class="console-title">Security Scanner Console</span>
+              <span class="console-status-pill">
+                <span class="pulse-dot" style="width: 6px; height: 6px;"></span>
+                Model v1.0 • Ready
+              </span>
+            </div>
+
+            <!-- Demo Preset Selector for Quick Presentations -->
+            <div class="sample-presets-bar">
+              <span class="sample-presets-label">Quick Demo:</span>
+              <button type="button" class="btn-preset danger-preset" data-sample="sample-scam" title="Load sample fraudulent data entry job">
+                <i data-lucide="alert-octagon" style="width: 13px; height: 13px; display: inline;"></i> Load Scam Sample
+              </button>
+              <button type="button" class="btn-preset legit-preset" data-sample="sample-legit" title="Load sample authentic software engineer job">
+                <i data-lucide="check-circle" style="width: 13px; height: 13px; display: inline;"></i> Load Legit Tech Role
+              </button>
+              <button type="button" class="btn-preset" data-sample="sample-admin" title="Load corporate administrative posting">
+                Corporate Job
+              </button>
+            </div>
+          </div>
+
+          <!-- Main Input Form -->
+          <form id="job-analyzer-form" novalidate>
+            
+            <div class="form-group">
+              <div class="form-label-row">
+                <label for="job-description" class="form-label">
+                  <i data-lucide="file-text" style="width: 16px; height: 16px; color: var(--accent);"></i>
+                  Job Description Content <span class="label-required">*</span>
+                </label>
+                <span class="character-counter" id="char-counter">0 chars • 0 words</span>
+              </div>
+              <textarea 
+                id="job-description" 
+                name="description" 
+                class="form-control" 
+                placeholder="Paste the full job posting text here (responsibilities, requirements, benefits, contact instructions, payment terms)..."
+                required
+              ></textarea>
+            </div>
+
+            <!-- Optional Metadata Accordion -->
+            <div class="optional-fields-accordion">
+              <button type="button" class="accordion-trigger" id="optional-accordion-trigger">
+                <i data-lucide="chevron-right"></i>
+                <span>Add Optional Job Details (Title, Company, Salary, Links)</span>
+              </button>
+
+              <div class="optional-fields-content" id="optional-fields-content">
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="job-title" class="form-label">Job Title</label>
+                  <input type="text" id="job-title" class="form-control" placeholder="e.g. Senior Data Analyst">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="company-name" class="form-label">Company Name</label>
+                  <input type="text" id="company-name" class="form-control" placeholder="e.g. Acme Health Corp">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="company-website" class="form-label">Company Website</label>
+                  <input type="url" id="company-website" class="form-control" placeholder="https://example.com">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="salary-range" class="form-label">Advertised Salary</label>
+                  <input type="text" id="salary-range" class="form-control" placeholder="e.g. $45/hr or $90,000/yr">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 0;">
+                  <label for="job-url" class="form-label">Application Link / URL</label>
+                  <input type="url" id="job-url" class="form-control" placeholder="https://recruitment.portal/apply">
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Action Buttons -->
+            <div class="analyzer-action-bar">
+              <button type="submit" id="btn-analyze-submit" class="btn btn-primary btn-analyze">
+                <i data-lucide="scan"></i> Analyze Job Posting
+              </button>
+              
+              <button type="button" id="btn-clear-form" class="btn btn-clear">
+                <i data-lucide="trash-2" style="width: 16px; height: 16px;"></i> Clear Form
+              </button>
+            </div>
+
+          </form>
+
+          <!-- Input Validation / Server Error Banner -->
+          <div class="error-banner" id="error-banner" role="alert">
+            <i data-lucide="alert-circle" style="color: var(--danger); width: 20px; height: 20px; flex-shrink: 0;"></i>
+            <span id="error-text">Please provide a valid job description before analyzing.</span>
+          </div>
+
+          <!-- Loading Cyber Scanner Indicator -->
+          <div class="loading-indicator" id="loading-indicator" aria-live="polite">
+            <div class="scanner-progress-track">
+              <div class="scanner-progress-bar"></div>
+            </div>
+            <div class="loading-text">
+              <i data-lucide="cpu" style="width: 16px; height: 16px; display: inline; vertical-align: middle;"></i>
+              ANALYZING POSTING WITH TF-IDF + LOGISTIC REGRESSION...
+            </div>
+            <div class="loading-subtext" id="loading-subtext">Tokenizing text n-grams...</div>
+          </div>
+
+        </div>
+
+        <!-- ==============================================================================
+             4. Results Section (Real Machine Learning Predictions)
+             ============================================================================== -->
+        <div class="results-container" id="results-container">
+          <div class="glass-card result-card" id="result-card">
+            
+            <div class="result-header-grid">
+              
+              <!-- Verdict Text & Explanation -->
+              <div>
+                <div class="result-badge-wrap">
+                  <div class="verdict-badge" id="verdict-badge">
+                    <i data-lucide="shield-check" id="verdict-badge-icon"></i>
+                    <span id="verdict-badge-text">Likely Legitimate</span>
+                  </div>
+                  <span class="risk-level-tag" id="risk-level-tag">Low Risk</span>
+                </div>
+
+                <h3 class="verdict-summary-title" id="verdict-title">Analysis Complete</h3>
+                
+                <p class="verdict-explanation" id="verdict-explanation">
+                  The model evaluated this posting against 17,880 historical job descriptions.
+                </p>
+              </div>
+
+              <!-- Risk Meter Gauge (Circular SVG) -->
+              <div class="meter-card">
+                <div class="circular-gauge">
+                  <svg viewBox="0 0 120 120">
+                    <circle class="gauge-track" cx="60" cy="60" r="54"></circle>
+                    <circle class="gauge-fill" id="gauge-fill" cx="60" cy="60" r="54"></circle>
+                  </svg>
+                  <div class="gauge-content">
+                    <div class="gauge-value" id="gauge-value">0.0%</div>
+                    <div class="gauge-label">Fraud Probability</div>
+                  </div>
+                </div>
+                <div class="meter-caption">Model-Estimated Fraud Probability</div>
+              </div>
+
+            </div>
+
+            <!-- Mathematical Linguistic Signals / Feature Attribution -->
+            <div class="evidence-section">
+              <h4 class="evidence-title">
+                <i data-lucide="microscope" style="color: var(--accent); width: 18px; height: 18px;"></i>
+                Linguistic Signal Attribution (Model Coefficients)
+              </h4>
+              <p class="evidence-desc">
+                Features extracted from the Logistic Regression weights for active N-grams present in this job posting:
+              </p>
+
+              <div class="signals-grid">
+                
+                <!-- Fraud Signals Column -->
+                <div class="signal-group-box">
+                  <div class="signal-group-header fraud-header">
+                    <i data-lucide="trending-up" style="width: 15px; height: 15px;"></i>
+                    Fraud Correlated Terms (Positive Weights)
+                  </div>
+                  <div class="signal-chips-list" id="fraud-signals-list">
+                    <span class="signal-chip">None detected</span>
+                  </div>
+                </div>
+
+                <!-- Legit Signals Column -->
+                <div class="signal-group-box">
+                  <div class="signal-group-header legit-header">
+                    <i data-lucide="trending-down" style="width: 15px; height: 15px;"></i>
+                    Legitimate Correlated Terms (Negative Weights)
+                  </div>
+                  <div class="signal-chips-list" id="legit-signals-list">
+                    <span class="signal-chip">None detected</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- Safety Advisory Banner -->
+            <div class="result-disclaimer">
+              <i data-lucide="alert-triangle"></i>
+              <div>
+                <strong>Important Safety Guidance:</strong> This prediction is a probabilistic estimate generated by machine learning from text patterns. It is not an absolute guarantee. Legitimate companies never charge registration fees or send cashier checks for home equipment. Always conduct independent due diligence.
+              </div>
+            </div>
+
+            <!-- Actions Bar -->
+            <div class="result-actions-row">
+              <button type="button" id="btn-scan-another" class="btn btn-secondary btn-sm">
+                <i data-lucide="rotate-ccw" style="width: 14px; height: 14px;"></i> Analyze Another Job
+              </button>
+              
+              <div style="font-size: 0.8rem; color: var(--text-dim);">
+                <i data-lucide="cpu" style="width: 14px; height: 14px; display: inline; vertical-align: middle;"></i>
+                Evaluated with Scikit-learn Pipeline (50,000 N-Grams)
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         5. Recent Analyses History (Local Storage)
+         ============================================================================== -->
+    <section class="history-section" id="history">
+      <div class="container">
+        <div class="glass-card history-card">
+          
+          <div class="history-header">
+            <div class="history-title-group">
+              <i data-lucide="history" style="color: var(--accent);"></i>
+              <h3 style="font-size: 1.25rem;">Recent Browser Analyses</h3>
+              <span class="history-badge">Stored in Local Browser Cache</span>
+            </div>
+
+            <button type="button" id="btn-clear-history" class="btn btn-secondary btn-sm">
+              <i data-lucide="trash" style="width: 13px; height: 13px;"></i> Clear History
+            </button>
+          </div>
+
+          <!-- Empty State -->
+          <div class="history-empty-state" id="history-empty-state">
+            <i data-lucide="inbox"></i>
+            <p>No recent job analyses yet. Run an analysis above to see your browser-cached history here.</p>
+          </div>
+
+          <!-- History Table -->
+          <div class="history-table-container" id="history-table-wrap" style="display: none;">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Timestamp</th>
+                  <th>Job Title / Company</th>
+                  <th>Verdict</th>
+                  <th>Fraud Prob</th>
+                  <th style="text-align: right;">Action</th>
+                </tr>
+              </thead>
+              <tbody id="history-table-body">
+                <!-- Dynamically populated from script.js -->
+              </tbody>
+            </table>
+          </div>
+
+          <div class="history-privacy-note">
+            <i data-lucide="shield" style="width: 14px; height: 14px; color: var(--accent);"></i>
+            <span>This log is stored exclusively on your device via HTML5 localStorage. No user queries are permanently logged to an external database.</span>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         6. How It Works Section
+         ============================================================================== -->
+    <section class="how-it-works-section" id="how-it-works">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="section-tag">
+            <i data-lucide="git-merge" style="width: 16px; height: 16px;"></i>
+            Architecture
+          </div>
+          <h2 class="section-title">How JobShield AI Detects Scams</h2>
+          <p class="section-desc">
+            A transparent end-to-end Machine Learning pipeline transforming unstructured job descriptions into calibrated risk probabilities.
+          </p>
+        </div>
+
+        <div class="pipeline-grid">
+          
+          <div class="pipeline-step-card">
+            <div class="step-number">01</div>
+            <div class="step-icon">
+              <i data-lucide="file-input"></i>
+            </div>
+            <h4 class="step-title">Text Ingestion</h4>
+            <p class="step-desc">
+              Raw employment postings, including job titles, descriptions, and compensation terms, are collected and merged into an unstructured text stream.
+            </p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <div class="step-number">02</div>
+            <div class="step-icon">
+              <i data-lucide="filter"></i>
+            </div>
+            <h4 class="step-title">Text Preprocessing</h4>
+            <p class="step-desc">
+              The text is normalized to lowercase, punctuation is handled, and common English stop words are removed to highlight discriminative phrasing.
+            </p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <div class="step-number">03</div>
+            <div class="step-icon">
+              <i data-lucide="binary"></i>
+            </div>
+            <h4 class="step-title">TF-IDF Vectorization</h4>
+            <p class="step-desc">
+              50,000 unigrams and bigrams are extracted with sublinear term-frequency scaling, penalizing common terms while emphasizing unique fraud signals.
+            </p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <div class="step-number">04</div>
+            <div class="step-icon">
+              <i data-lucide="git-commit"></i>
+            </div>
+            <h4 class="step-title">Logistic Regression</h4>
+            <p class="step-desc">
+              Class-weighted Logistic Regression evaluates feature weights and computes the log-odds of fraud, passing through a sigmoid activation curve.
+            </p>
+          </div>
+
+          <div class="pipeline-step-card">
+            <div class="step-number">05</div>
+            <div class="step-icon">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <h4 class="step-title">Calibrated Scoring</h4>
+            <p class="step-desc">
+              Outputs a clear verdict, an exact fraud probability percentage, and pinpoints top mathematical linguistic signals for transparent decision explainability.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         7. Key Features Section
+         ============================================================================== -->
+    <section class="features-section" id="features">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="section-tag">
+            <i data-lucide="sparkles" style="width: 16px; height: 16px;"></i>
+            Capabilities
+          </div>
+          <h2 class="section-title">Built for Modern Cyber Defense</h2>
+          <p class="section-desc">
+            Engineered to deliver enterprise-grade speed, transparency, and statistical rigor for career security.
+          </p>
+        </div>
+
+        <div class="features-grid">
+          
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <i data-lucide="brain"></i>
+            </div>
+            <h4 class="feature-title">Real Machine Learning</h4>
+            <p class="feature-desc">
+              Trained on 17,880 genuine job postings from the benchmark EMSCAD dataset, learning authentic deceptive vocabulary and structure rather than relying on brittle static keywords.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <i data-lucide="zap"></i>
+            </div>
+            <h4 class="feature-title">Sub-Second Inference</h4>
+            <p class="feature-desc">
+              Optimized Scikit-learn sparse matrix transformations execute in milliseconds, allowing rapid evaluation without requiring heavy GPU infrastructure.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <i data-lucide="eye"></i>
+            </div>
+            <h4 class="feature-title">Mathematical Explainability</h4>
+            <p class="feature-desc">
+              Inspect exactly which phrases triggered the model. Features with positive weights signify scam patterns; negative weights reflect authentic recruitment vocabulary.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <i data-lucide="scale"></i>
+            </div>
+            <h4 class="feature-title">Class-Imbalance Compensation</h4>
+            <p class="feature-desc">
+              Job scams represent only ~5% of real-world postings. Balanced loss weighting ensures fraudulent examples are heavily penalized during training, preventing majority class bias.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <i data-lucide="lock"></i>
+            </div>
+            <h4 class="feature-title">Zero Data Retention</h4>
+            <p class="feature-desc">
+              Job postings and personal application details submitted for analysis are never sold, cached on server databases, or used for unsolicited commercial marketing.
+            </p>
+          </div>
+
+          <div class="feature-box">
+            <div class="feature-icon-wrap">
+              <i data-lucide="layout"></i>
+            </div>
+            <h4 class="feature-title">Cybersecurity Dashboard UX</h4>
+            <p class="feature-desc">
+              Sleek glassmorphism visual hierarchy, animated circular risk meter, and mobile-friendly responsive layouts designed specifically for live project demonstrations.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         8. Real Benchmark Statistics Section (Verified Dataset & Evaluation)
+         ============================================================================== -->
+    <section class="stats-section" id="stats">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="section-tag">
+            <i data-lucide="bar-chart-2" style="width: 16px; height: 16px;"></i>
+            Empirical Validation
+          </div>
+          <h2 class="section-title">Verified Benchmark Statistics</h2>
+          <p class="section-desc">
+            Real metrics derived directly from the trained model evaluated on 3,515 unseen test postings from the University of the Aegean EMSCAD dataset.
+          </p>
+        </div>
+
+        <!-- 4-Metric Grid -->
+        <div class="stats-grid">
+          <div class="stat-item-card">
+            <div class="stat-number text-gradient">17,880</div>
+            <div class="stat-label">Total Postings</div>
+            <div class="stat-detail">EMSCAD Benchmark Dataset</div>
+          </div>
+
+          <div class="stat-item-card">
+            <div class="stat-number" style="color: var(--accent-strong);">98.18%</div>
+            <div class="stat-label">Test Set Accuracy</div>
+            <div class="stat-detail">Evaluated on 3,515 Unseen Samples</div>
+          </div>
+
+          <div class="stat-item-card">
+            <div class="stat-number" style="color: var(--accent);">85.96%</div>
+            <div class="stat-label">Fraud Recall</div>
+            <div class="stat-detail">147 of 171 Fraud Cases Caught</div>
+          </div>
+
+          <div class="stat-item-card">
+            <div class="stat-number" style="color: var(--gold);">99.28%</div>
+            <div class="stat-label">Legit Precision</div>
+            <div class="stat-detail">3,304 of 3,328 Correctly Classified</div>
+          </div>
+        </div>
+
+        <!-- Confusion Matrix & Benchmark Card -->
+        <div class="benchmark-split-grid">
+          
+          <div class="glass-card benchmark-card">
+            <h3 class="benchmark-title">
+              <i data-lucide="grid" style="color: var(--accent); width: 20px; height: 20px;"></i>
+              Test Set Confusion Matrix (3,515 Samples)
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+              Stratified 20% test partition evaluating generalization on completely unseen postings:
+            </p>
+
+            <table class="confusion-matrix-table">
+              <thead>
+                <tr>
+                  <th style="font-size: 0.75rem; color: var(--text-dim); text-align: left;">Actual \ Predicted</th>
+                  <th style="font-size: 0.75rem; color: #56d6a7;">Predicted Legit</th>
+                  <th style="font-size: 0.75rem; color: #ff7185;">Predicted Fraud</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="font-size: 0.8rem; font-weight: 700; text-align: left;">Actual Legit (3,344)</td>
+                  <td class="matrix-cell true-legit">
+                    <div class="matrix-val">3,304</div>
+                    <div class="matrix-sub">True Negative (98.8%)</div>
+                  </td>
+                  <td class="matrix-cell">
+                    <div class="matrix-val">40</div>
+                    <div class="matrix-sub">False Positive (1.2%)</div>
+                  </td>
+                </tr>
+                <tr>
+                  <td style="font-size: 0.8rem; font-weight: 700; text-align: left;">Actual Fraud (171)</td>
+                  <td class="matrix-cell">
+                    <div class="matrix-val">24</div>
+                    <div class="matrix-sub">False Negative (14.0%)</div>
+                  </td>
+                  <td class="matrix-cell true-fraud">
+                    <div class="matrix-val">147</div>
+                    <div class="matrix-sub">True Positive (86.0%)</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="glass-card benchmark-card">
+            <h3 class="benchmark-title">
+              <i data-lucide="pie-chart" style="color: var(--gold); width: 20px; height: 20px;"></i>
+              Dataset Class Distribution
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              The dataset reflects the natural rarity of job scams in real-world recruitment ecosystems:
+            </p>
+
+            <div style="margin-bottom: 1.25rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                <span style="color: #56d6a7; font-weight: 600;">Legitimate Postings: 17,014</span>
+                <span class="mono" style="color: var(--text-muted);">95.16%</span>
+              </div>
+              <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                <div style="width: 95.16%; height: 100%; background: #56d6a7;"></div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.5rem;">
+              <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 0.4rem;">
+                <span style="color: #ff7185; font-weight: 600;">Fraudulent Postings: 866</span>
+                <span class="mono" style="color: var(--text-muted);">4.84%</span>
+              </div>
+              <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.06); border-radius: 4px; overflow: hidden;">
+                <div style="width: 4.84%; height: 100%; background: #ff7185; box-shadow: 0 0 8px rgba(255, 113, 133, 0.55);"></div>
+              </div>
+            </div>
+
+            <p style="font-size: 0.8rem; color: var(--text-dim); line-height: 1.6;">
+              <strong>Class Imbalance Strategy:</strong> Without compensation, a naive model guessing "legitimate" would achieve 95% accuracy while catching 0 scams. JobShield AI utilizes balanced class weighting to ensure scams receive high penalty multipliers during logistic regression optimization.
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         9. About the Model Section (TF-IDF & Logistic Regression)
+         ============================================================================== -->
+    <section class="about-model-section" id="about-model">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="section-tag">
+            <i data-lucide="book-open" style="width: 16px; height: 16px;"></i>
+            Algorithm Fundamentals
+          </div>
+          <h2 class="section-title">About the Machine Learning Engine</h2>
+          <p class="section-desc">
+            Understanding the math and natural language processing techniques powering JobShield AI.
+          </p>
+        </div>
+
+        <div class="model-explanation-grid">
+          
+          <!-- TF-IDF Explanation -->
+          <div class="glass-card concept-box">
+            <span class="concept-badge">Feature Extraction</span>
+            <h3 class="concept-title">TF-IDF Vectorization</h3>
+            <p class="concept-text">
+              <strong>Term Frequency-Inverse Document Frequency (TF-IDF)</strong> converts job descriptions into numerical vectors based on how informative each word or phrase is.
+            </p>
+            <p class="concept-text">
+              Common words like "the", "and", or "job" appear in virtually every posting and receive low weights. In contrast, distinctive n-grams such as <em>"cashier check"</em>, <em>"wire transfer"</em>, or <em>"registration fee"</em> appear rarely across legitimate jobs and receive high importance values.
+            </p>
+
+            <div class="code-snippet-box">
+              <span style="color: #81969d;"># TF-IDF Pipeline Configuration</span><br>
+              TfidfVectorizer(<br>
+              &nbsp;&nbsp;stop_words="english",<br>
+              &nbsp;&nbsp;max_features=50000,<br>
+              &nbsp;&nbsp;ngram_range=(1, 2),  <span style="color: #81969d;"># Unigrams &amp; Bigrams</span><br>
+              &nbsp;&nbsp;sublinear_tf=True<br>
+              )
+            </div>
+          </div>
+
+          <!-- Logistic Regression Explanation -->
+          <div class="glass-card concept-box">
+            <span class="concept-badge">Classification</span>
+            <h3 class="concept-title">Logistic Regression</h3>
+            <p class="concept-text">
+              <strong>Logistic Regression</strong> is a statistical classification algorithm that computes a linear combination of all TF-IDF feature weights and maps the result through a sigmoid activation function to output a probability between 0% and 100%.
+            </p>
+            <p class="concept-text">
+              In high-dimensional text classification (50,000 features), Logistic Regression is exceptionally well-suited: it avoids deep neural network overfitting, provides sub-second inference, and produces mathematically interpretable coefficients.
+            </p>
+
+            <div class="code-snippet-box">
+              <span style="color: #81969d;"># Sigmoid Mathematical Function</span><br>
+              P(Fraud | X) = 1 / (1 + e^-(w · X + b))<br><br>
+              <span style="color: #81969d;"># Classifier Configuration</span><br>
+              LogisticRegression(<br>
+              &nbsp;&nbsp;class_weight="balanced",<br>
+              &nbsp;&nbsp;max_iter=1000,<br>
+              &nbsp;&nbsp;random_state=42<br>
+              )
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==============================================================================
+         10. Limitations & Safety Guidelines Section
+         ============================================================================== -->
+    <section class="safety-section" id="safety">
+      <div class="container">
+        
+        <div class="section-header">
+          <div class="section-tag">
+            <i data-lucide="shield-alert" style="width: 16px; height: 16px;"></i>
+            Safety &amp; Compliance
+          </div>
+          <h2 class="section-title">Job Scam Red Flags &amp; Disclaimers</h2>
+          <p class="section-desc">
+            Essential safety rules every job seeker must follow to avoid recruitment fraud.
+          </p>
+        </div>
+
+        <div class="safety-grid">
+          
+          <!-- Red Flags Checklist -->
+          <div class="glass-card checklist-box">
+            <h3 class="checklist-title">
+              <i data-lucide="alert-triangle" style="color: var(--gold);"></i>
+              Critical Recruitment Red Flags
+            </h3>
+
+            <ul class="safety-list">
+              <li>
+                <i data-lucide="x-circle"></i>
+                <div>
+                  <strong>Upfront Fees:</strong> Legitimate employers will never ask you to pay for training, onboarding, software licenses, or background checks.
+                </div>
+              </li>
+              <li>
+                <i data-lucide="x-circle"></i>
+                <div>
+                  <strong>Overpayment / Cashier Checks:</strong> Scammers send fake checks to "buy home equipment" and instruct you to wire excess funds back.
+                </div>
+              </li>
+              <li>
+                <i data-lucide="x-circle"></i>
+                <div>
+                  <strong>Chat-Only Interviews:</strong> Real companies do not conduct formal hiring exclusively over Telegram, WhatsApp, or Google Chat text.
+                </div>
+              </li>
+              <li>
+                <i data-lucide="x-circle"></i>
+                <div>
+                  <strong>Generic Email Domains:</strong> Watch out for recruiters using free webmail (@gmail.com, @yahoo.com) rather than corporate domains.
+                </div>
+              </li>
+              <li>
+                <i data-lucide="x-circle"></i>
+                <div>
+                  <strong>Unrealistic Pay for Low Effort:</strong> Promises of $50–$100/hr for simple data entry with no prior experience or interview are nearly always fraudulent.
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Model Limitations Card -->
+          <div class="glass-card disclaimer-card">
+            <h3 class="disclaimer-title">
+              <i data-lucide="info" style="color: var(--accent);"></i>
+              System Limitations &amp; Scope
+            </h3>
+
+            <p class="disclaimer-text">
+              JobShield AI evaluates text using learned statistical patterns from historical data. It does not perform active background checks, corporate registry lookups, or criminal investigations.
+            </p>
+
+            <p class="disclaimer-text">
+              Sophisticated scammers occasionally copy authentic job descriptions verbatim from legitimate companies. In such cases, text analysis alone may classify the description as legitimate. Always verify:
+            </p>
+
+            <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+              <div style="font-size: 0.85rem; color: #edf5f3; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;">
+                <i data-lucide="check" style="color: #56d6a7; width: 14px; height: 14px;"></i> Check official career portals directly
+              </div>
+              <div style="font-size: 0.85rem; color: #edf5f3; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.4rem;">
+                <i data-lucide="check" style="color: #56d6a7; width: 14px; height: 14px;"></i> Confirm recruiter identity on LinkedIn
+              </div>
+              <div style="font-size: 0.85rem; color: #edf5f3; display: flex; align-items: center; gap: 0.4rem;">
+                <i data-lucide="check" style="color: #56d6a7; width: 14px; height: 14px;"></i> Never share banking PINs, SSNs, or crypto
+              </div>
+            </div>
+
+            <div style="font-size: 0.78rem; color: var(--text-dim);">
+              Use JobShield AI as an initial screening tool, not a legal guarantee.
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- ==============================================================================
+       11. Footer
+       ============================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        
+        <div>
+          <div class="nav-brand" style="margin-bottom: 0.8rem;">
+            <div class="brand-icon">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <div class="brand-name">
+              JobShield<span>AI</span>
+            </div>
+          </div>
+          <p class="footer-brand-desc">
+            Empowering career seekers with Machine Learning cybersecurity intelligence. Protecting candidates against fraudulent listings, check-cashing schemes, and recruitment scams.
+          </p>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#analyzer">Job Threat Scanner</a></li>
+            <li><a href="#how-it-works">Architecture</a></li>
+            <li><a href="#stats">Benchmark Statistics</a></li>
+            <li><a href="#about-model">TF-IDF &amp; Logistic Regression</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Technology</h4>
+          <ul class="footer-links">
+            <li><a href="#about-model">Scikit-Learn Pipeline</a></li>
+            <li><a href="#stats">EMSCAD Dataset (17.8K Postings)</a></li>
+            <li><a href="#how-it-works">N-Gram Vectorization</a></li>
+            <li><a href="#safety">Cybersecurity Guidelines</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>
+          &copy; 2026 JobShield AI — AI-Powered Job Scam Detection System. All rights reserved.
+        </div>
+        <div class="footer-tagline">
+          Built with <span>Python</span>, <span>Flask</span>, and <span>Scikit-Learn</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic -->
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
